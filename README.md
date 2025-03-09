@@ -50,7 +50,7 @@ E.  Add a sample inventory appropriate for your chosen store to the application.
 
 Note: Make sure the sample inventory is added only when both the part and product lists are empty. When adding the sample inventory appropriate for the store, the inventory is stored in a set so duplicate items cannot be added to your products. When duplicate items are added, make a “multi-pack” part.
 
-
+BootStrapData
         // 3 inhouse parts
         if (partRepository.count() == 0) {
             InhousePart ram = createInhousePart("RAM100", 9.99, 10, 2, 100);
@@ -98,7 +98,7 @@ mainscreen.html Line: 88
       <a th:href="@{/purchase(productID=${product.id})}" class="btn btn-primary btn-sm mb-3">Purchase</a> <!--@{/purchase({productID=${tempProduct.Id}})} post request function-->
  </td>
 
-ProductController Line: 170
+ProductController.java Line: 170
 @GetMapping("/purchase")
     public String purchaseProduct(@RequestParam("productID") int Id) {
         ProductService productService = context.getBean(ProductServiceImpl.class);
@@ -111,7 +111,6 @@ ProductController Line: 170
         } else {
             return "outofstock";
         }
-
 }
 
 
@@ -121,8 +120,6 @@ G.  Modify the parts to track maximum and minimum inventory by doing the followi
 •  Add to the InhousePartForm and OutsourcedPartForm forms additional text inputs for the inventory so the user can set the maximum and minimum values.
 •  Rename the file the persistent storage is saved to.
 •  Modify the code to enforce that the inventory is between or at the minimum and maximum value.
-
-Field inputs in InhousePart/Outsourced
 
 InhousePartForm.html Line: 22
 OutsourcedPartForm.html Line: 22
@@ -134,11 +131,11 @@ OutsourcedPartForm.html Line: 22
     </p>
 
 
-Added 4/5th columns for min/maximum in sample inventory
+Added 4th & 5th columns for min/maximum in sample inventory
 ("RAM100", 9.99, 10, 2, 100);
 
 
-Part/Product Entity
+Part.java Line: 20
  @Min(value = 0, message = "Inventory value must be positive")
     int inv;
     @Min(value = 0, message = "Minimum must be ≥ 0")
@@ -146,10 +143,25 @@ Part/Product Entity
     @Min(value = 1, message = "Maximum must be ≥ 1")
     int maximum;
 
-InhousePart/Outsourced Controller
+Product.java Line: 15
+@Min(value = 0, message = "Inventory value must be positive")
+int inv;
+@Min(value = 0, message = "Minimum must be ≥ 0")
+int minimum;
+@Min(value = 1, message = "Maximum must be ≥ 1")
+int maximum;
+
+
+InhousePartController.java Line 38
    if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
        bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
    }
+
+InhousePartController.java Line 36
+
+if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
+    bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
+}
 
 
 H.  Add validation for between or at the maximum and minimum fields. The validation must include the following:

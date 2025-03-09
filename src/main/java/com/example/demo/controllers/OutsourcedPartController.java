@@ -32,6 +32,7 @@ public class OutsourcedPartController {
     @PostMapping("/OutsourcedPartForm")
     public String submitForm(@Valid @ModelAttribute("outsourcedpart") OutsourcedPart part, BindingResult bindingResult, Model model){
         OutsourcedPartService repo=context.getBean(OutsourcedPartServiceImpl.class);
+
         if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
             bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
         }
