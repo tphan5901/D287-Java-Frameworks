@@ -53,7 +53,7 @@ public class BootStrapData implements CommandLineRunner {
             Product r720 = createProduct("Dell R720 Server", 199.99, 15);
             Product r730 = createProduct("Dell R730 Server", 299.99, 15);
             Product monitor = createProduct("27\" 4K Monitor", 299.99, 20);
-            Product mouse = createProduct("Gaming Mouse", 49.99, 1);
+            Product mouse = createProduct("Gaming Mouse", 49.99, 30);
 
             productRepository.save(r710);
             productRepository.save(r720);

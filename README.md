@@ -94,7 +94,8 @@ F.  Add a “Buy Now” button to your product list. Your “Buy Now” button m
 •  Display a message that indicates the success or failure of a purchase.
 
 mainscreen.html Line: 88
- <td><a th:href="@{/UpdateProductForm(productID=${product.id})}" class="btn btn-primary btn-sm mb-3">Update</a> 
+ <td>
+      <a th:href="@{/UpdateProductForm(productID=${product.id})}" class="btn btn-primary btn-sm mb-3">Update</a> 
       <a th:href="@{/purchase(productID=${product.id})}" class="btn btn-primary btn-sm mb-3">Purchase</a> <!--@{/purchase({productID=${tempProduct.Id}})} post request function-->
  </td>
 
