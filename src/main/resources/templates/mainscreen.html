@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Computer Supply Store</title>
+</head>
+<body class = "p-4">
+
+<div>
+    <h1>Computer supply store</h1>
+    <hr>
+    <h2>Parts</h2>
+    <form th:action="@{/mainscreen}">
+        <input type="text" name="partkeyword" id="partkeyword" size="50" th:value="${partkeyword}" required />&nbsp;
+        <input type="submit" value="Search" />
+        <input type="button" value="Clear" onclick="clearSearch()"/>
+    </form>
+    <br><br>
+    <a th:href="@{/InhousePartForm}" class="btn btn-primary btn-sm mb-3">Add Inhouse Part</a>
+    <a th:href="@{/OutsourcedPartForm}" class="btn btn-primary btn-sm mb-3">Add Outsourced Part</a>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Inventory</th>
+            <th>Min</th>
+            <th>Max</th>
+            <th>Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="part : ${parts}">
+            <td th:text="${part.name}">1</td>
+            <td th:text="${part.price}">1</td>
+            <td th:text="${part.inv}">1</td>
+            <td th:text="${part.minimum}">1</td>
+            <td th:text="${part.maximum}">1</td>
+            <td><a th:href="@{/UpdatePartForm(partID=${part.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
+                <a th:href="@{/deletepart(partID=${part.id})}" class="btn btn-primary btn-sm mb-3"
+                   onclick="if(!(confirm('Are you sure you want to delete this part?')))return false">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Products</h2>
+    <form th:action="@{/mainscreen}">
+        <input type="text" name="productkeyword" id="productkeyword" size="50" th:value="${productkeyword}" required />&nbsp;
+        <input type="submit" value="Search" />
+        <input type="button" value="Clear" onclick="clearSearch()"/> <!--form will not clear if the function name is clear()-->
+    </form>
+
+    <script type="text/javascript">
+        function clearSearch() {
+            window.location = "/mainscreen";
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Clear session storage when home page loads
+            sessionStorage.removeItem('productData');
+        });
+    </script>
+
+    <br><br>
+    <a th:href="@{/addProductForm}" class="btn btn-primary btn-sm mb-3">Add Product</a>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Inventory</th>
+            <th>Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.name}">1</td>
+            <td th:text="${product.price}">1</td>
+            <td th:text="${product.inv}">1</td>
+            <td><a th:href="@{/UpdateProductForm(productID=${product.id})}" class="btn btn-primary btn-sm mb-3">Update</a> <!--update, pass in product.Id as tempProduct then @requestparam for post request-->
+                <a th:href="@{/deleteproduct(productID=${product.id})}" class="btn btn-primary btn-sm mb-3"
+                   onclick="if(!(confirm('Are you sure you want to delete this product?')))return false">Delete</a>
+                <a th:href="@{/purchase(productID=${product.id})}" class="btn btn-primary btn-sm mb-3">Purchase</a> <!--@{/purchase({productID=${tempProduct.Id}})} post request function-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{about}" class="mt-3">About</a>
+</div>
+</body>
+</html>
