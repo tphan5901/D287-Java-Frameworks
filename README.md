@@ -36,10 +36,10 @@ about.html
 </head>
 <body class = "container p-5">
     <p>
-    Computer supply Store. We offer the best deals on pc components.
+    Computer supply Store. We offer the best deals on computer/phone & electronic components. We sell directly from the manufacturing facility, no added cost through the supply chain.
     </p>
 
-    <a href="/mainscreen">Link to Main Screen</a>
+    <a href="http://localhost:8080/">Link to Main Screen</a>
 </body>
 </html>
 
@@ -51,42 +51,38 @@ E.  Add a sample inventory appropriate for your chosen store to the application.
 Note: Make sure the sample inventory is added only when both the part and product lists are empty. When adding the sample inventory appropriate for the store, the inventory is stored in a set so duplicate items cannot be added to your products. When duplicate items are added, make a “multi-pack” part.
 
 BootStrapData
-        // 3 inhouse parts
-        if (partRepository.count() == 0) {
-            InhousePart ram = createInhousePart("RAM100", 9.99, 10, 2, 100);
-            InhousePart ssd = createInhousePart("SSD256", 49.99, 15, 1, 50);
-            InhousePart cpu = createInhousePart("CPU i7", 299.99, 5, 1, 10);
+    if (!partsExist) {
+        // 3 in-house parts
+        InhousePart ram = createInhousePart("RAM100", 9.99, 10, 2, 100);
+        InhousePart ssd = createInhousePart("SSD256", 49.99, 15, 1, 50);
+        InhousePart cpu = createInhousePart("CPU i7", 299.99, 5, 1, 10);
 
-            partRepository.save(ram);
-            partRepository.save(ssd);
-            partRepository.save(cpu);
-        }
+        partRepository.save(ram);
+        partRepository.save(ssd);
+        partRepository.save(cpu);
 
         // 2 outsourced parts
-        if (outsourcedPartRepository.count() == 0) {
-            OutsourcedPart flashDrive = createOutsourcedPart("Flash Drive", 9.99, 10, 2, 100, "Tek Corp");
-            OutsourcedPart keyboard = createOutsourcedPart("Mechanical Keyboard", 59.99, 20, 5, 50, "KeyTech");
+        OutsourcedPart flashDrive = createOutsourcedPart("Flash Drive", 9.99, 10, 2, 100, "Tek Corp");
+        OutsourcedPart keyboard = createOutsourcedPart("Mechanical Keyboard", 59.99, 20, 5, 50, "KeyTech");
 
-            outsourcedPartRepository.save(flashDrive);
-            outsourcedPartRepository.save(keyboard);
-        }
-
-        // 5 products
-        if (productRepository.count() == 0) {
-            Product r710 = createProduct("Dell R710 Server", 99.99, 15);
-            Product r720 = createProduct("Dell R720 Server", 199.99, 15);
-            Product r730 = createProduct("Dell R730 Server", 299.99, 15);
-            Product monitor = createProduct("27\" 4K Monitor", 299.99, 20);
-            Product mouse = createProduct("Gaming Mouse", 49.99, 30);
-
-            productRepository.save(r710);
-            productRepository.save(r720);
-            productRepository.save(r730);
-            productRepository.save(monitor);
-            productRepository.save(mouse);
-        }
+        outsourcedPartRepository.save(flashDrive);
+        outsourcedPartRepository.save(keyboard);
     }
 
+    // products
+    if (!productsExist) {
+        Product r710 = createProduct("Dell R710 Server", 99.99, 15);
+        Product r720 = createProduct("Dell R720 Server", 199.99, 15);
+        Product r730 = createProduct("Dell R730 Server", 299.99, 15);
+        Product monitor = createProduct("27\" 4K Monitor", 299.99, 20);
+        Product mouse = createProduct("Gaming Mouse", 49.99, 30);
+
+        productRepository.save(r710);
+        productRepository.save(r720);
+        productRepository.save(r730);
+        productRepository.save(monitor);
+        productRepository.save(mouse);
+    }
 
 F.  Add a “Buy Now” button to your product list. Your “Buy Now” button must meet each of the following parameters:
 •  The “Buy Now” button must be next to the buttons that update and delete products.
@@ -153,18 +149,6 @@ int minimum;
 int maximum;
 
 
-InhousePartController.java Line 38
-   if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
-       bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
-   }
-
-InhousePartController.java Line 36
-
-if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
-    bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
-}
-
-
 H.  Add validation for between or at the maximum and minimum fields. The validation must include the following:
 •  Display error messages for low inventory when adding and updating parts if the inventory is less than the minimum number of parts.
 •  Display error messages for low inventory when adding and updating products lowers the part inventory below the minimum.
@@ -178,6 +162,17 @@ OutsourcedPartForm.html Line: 23
 <p> Max <input type="text" id = "max" th:field="*{maximum}" placeholder="Max" class="form-control mb-4 col-4" required/>
     <span class="text-danger" th:errors="*{maximum}"></span>
 </p>
+
+InhousePartController.java Line 38
+if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
+bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
+}
+
+InhousePartController.java Line 36
+
+if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
+bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
+}
 
 I.  Add at least two unit tests for the maximum and minimum fields to the PartTest class in the test package.
 

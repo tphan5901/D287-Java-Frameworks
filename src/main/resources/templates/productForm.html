@@ -14,15 +14,22 @@
 <form action="#"  id="productForm"  th:action="@{/addProductForm}" th:object="${product}" method="POST">
     <p><input type="hidden" th:field="*{id}"/></p>
     <p>Name <input type="text" id = "name" th:field="*{name}" placeholder="Name" class="form-control mb-4 col-4" required/></p>
-    <p>Price <input type="text" id = "price" th:field="*{price}" placeholder= "Price" class="form-control mb-4 col-4" required/>
+    <!-- Price Field -->
+    <p>Price
+        <input type="number" step="0.01" id="price" th:field="*{price}" placeholder="Price" class="form-control mb-4 col-4" required/>
         <span class="text-danger" th:errors="*{price}"></span>
     </p>
-    <p>Inventory <input type="text" id = "inventory" th:field="*{inv}" placeholder="Inventory" class="form-control mb-4 col-4" required/>
+    <!-- Inventory Field -->
+    <p>Inventory
+        <input type="number" step="1" id="inventory" th:field="*{inv}" placeholder="Inventory" class="form-control mb-4 col-4" required/>
         <span class="text-danger" th:errors="*{inv}"></span>
     </p>
 
+    <div th:if="${#fields.hasGlobalErrors()}" class="text-danger">
+        <span th:each="err : ${#fields.globalErrors()}" th:text="${err}"></span>
+    </div>
+
     <p><input type="submit" value="Submit" class="btn btn-success"/>
-        <span class="text-danger" th:errors="*{inv}"></span>
     </p>
     <a href="/mainscreen" class="btn btn-primary mt-3">Mainscreen</a>
 </form>
@@ -99,29 +106,7 @@
           });
       });
 
-       document.getElementById('productForm').addEventListener('submit', function(event) {
-       //important to parse inputs
-            let name = document.getElementById('name').value.trim();
-            let inv = parseInt(document.getElementById('inventory').value);
-            let price = parseFloat(document.getElementById('price').value);
-            let errorMessage = '';
-
-            if (!name) {
-                errorMessage += 'Name is empty. ';
-            }
-            if (!inv) {
-                errorMessage += 'Inventory cannot be empty. ';
-            }
-            if (!price) {
-                errorMessage += 'Price cannot be empty. ';
-            }
-
-            if (errorMessage) {
-                alert(errorMessage);
-                event.preventDefault();
-                return;
-            }
-        });
+    });
 </script>
 
 </body>

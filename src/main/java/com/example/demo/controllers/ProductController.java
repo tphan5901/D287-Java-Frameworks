@@ -46,17 +46,21 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("parts", partService.getAll());
             model.addAttribute("availparts", getAvailableParts());
+            model.addAttribute("assparts", product.getParts());
             return "productForm";
         }
 
         //price validation
-        double totalPartsPrice = product.getParts().stream().mapToDouble(Part::getPrice).sum();
+        double totalPartsPrice = product.getParts().stream()
+                .mapToDouble(Part::getPrice)
+                .sum();
+
+        // Validate product price ≥ sum of parts
         if (product.getPrice() < totalPartsPrice) {
             bindingResult.rejectValue("price", "error.price", "Product price must be ≥ sum of parts");
-        }
-
-        if (bindingResult.hasErrors()) {
             model.addAttribute("parts", partService.getAll());
+            model.addAttribute("availparts", getAvailableParts());
+            model.addAttribute("assparts", product.getParts());
             return "productForm";
         }
 

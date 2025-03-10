@@ -24,11 +24,11 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        outsourcedPartRepository.findAll().forEach(part ->
-                System.out.println(part.getName() + " " + part.getCompanyName()));
+        boolean partsExist = partRepository.count() > 0 || outsourcedPartRepository.count() > 0;
+        boolean productsExist = productRepository.count() > 0;
 
-        // 3 inhouse parts
-        if (partRepository.count() == 0) {
+        if (!partsExist) {
+            // 3 in-house parts
             InhousePart ram = createInhousePart("RAM100", 9.99, 10, 2, 100);
             InhousePart ssd = createInhousePart("SSD256", 49.99, 15, 1, 50);
             InhousePart cpu = createInhousePart("CPU i7", 299.99, 5, 1, 10);
@@ -36,10 +36,8 @@ public class BootStrapData implements CommandLineRunner {
             partRepository.save(ram);
             partRepository.save(ssd);
             partRepository.save(cpu);
-        }
 
-        // 2 outsourced parts
-        if (outsourcedPartRepository.count() == 0) {
+            // 2 outsourced parts
             OutsourcedPart flashDrive = createOutsourcedPart("Flash Drive", 9.99, 10, 2, 100, "Tek Corp");
             OutsourcedPart keyboard = createOutsourcedPart("Mechanical Keyboard", 59.99, 20, 5, 50, "KeyTech");
 
@@ -47,8 +45,8 @@ public class BootStrapData implements CommandLineRunner {
             outsourcedPartRepository.save(keyboard);
         }
 
-        // 5 products
-        if (productRepository.count() == 0) {
+        // products
+        if (!productsExist) {
             Product r710 = createProduct("Dell R710 Server", 99.99, 15);
             Product r720 = createProduct("Dell R720 Server", 199.99, 15);
             Product r730 = createProduct("Dell R730 Server", 299.99, 15);
@@ -87,5 +85,4 @@ public class BootStrapData implements CommandLineRunner {
     private Product createProduct(String name, double price, int inv) {
         return new Product(name, price, inv);
     }
-
 }

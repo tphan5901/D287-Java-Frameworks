@@ -1,4 +1,7 @@
 package com.example.demo.domain;
+import com.example.demo.validators.ValidEnufParts;
+import com.example.demo.validators.ValidProductPrice;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
@@ -6,6 +9,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@ValidProductPrice
+@ValidEnufParts
 @Table(name="Products")
 public class Product implements Serializable {
     @Id

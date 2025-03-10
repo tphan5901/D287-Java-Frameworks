@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("2")
 public class OutsourcedPart extends Part{
     String companyName;
+    public OutsourcedPart() {
+    }
 
     public String getCompanyName() {
         return companyName;
