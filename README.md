@@ -126,9 +126,36 @@ OutsourcedPartForm.html Line: 22
         <span class="text-danger" th:errors="*{maximum}"></span>
     </p>
 
+BoostrapData.java
+//In-houseParts
+InhousePart ram = createInhousePart("RAM100", 9.99, 10, 2, 100);
+InhousePart ssd = createInhousePart("SSD256", 49.99, 15, 1, 50);
+InhousePart cpu = createInhousePart("CPU i7", 299.99, 5, 1, 10);
 
-Added 4th & 5th columns for min/maximum in sample inventory
-("RAM100", 9.99, 10, 2, 100);
+//OutsourcedParts
+OutsourcedPart flashDrive = createOutsourcedPart("Flash Drive", 9.99, 10, 2, 100, "Tek Corp");
+OutsourcedPart keyboard = createOutsourcedPart("Mechanical Keyboard", 59.99, 20, 5, 50, "KeyTech");
+
+//Products
+Product r710 = createProduct("Dell R710 Server", 99.99, 15);
+Product r720 = createProduct("Dell R720 Server", 199.99, 15);
+Product r730 = createProduct("Dell R730 Server", 299.99, 15);
+Product monitor = createProduct("27\" 4K Monitor", 299.99, 20);
+Product mouse = createProduct("Gaming Mouse", 49.99, 30);
+
+    private InhousePart createInhousePart(String name, double price, int inv, int min, int max) {
+        InhousePart part = new InhousePart();
+        part.setMinimum(min);
+        part.setMaximum(max);
+        return part;
+    }
+
+    private OutsourcedPart createOutsourcedPart(String name, double price, int inv, int min, int max, String company) {
+        OutsourcedPart part = new OutsourcedPart();
+        part.setMinimum(min);
+        part.setMaximum(max);
+        return part;
+    }
 
 
 Part.java Line: 20
@@ -146,6 +173,16 @@ int inv;
 int minimum;
 @Min(value = 1, message = "Maximum must be ≥ 1")
 int maximum;
+
+InhousePartController.java Line 38
+if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
+bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
+}
+
+OutsourcedPartController.java Line 36
+if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
+bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
+}
 
 
 H.  Add validation for between or at the maximum and minimum fields. The validation must include the following:
@@ -167,8 +204,7 @@ if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
 bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
 }
 
-InhousePartController.java Line 36
-
+OutsourcedPartController.java Line 36
 if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
 bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
 }
