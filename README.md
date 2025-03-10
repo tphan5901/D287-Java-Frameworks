@@ -174,6 +174,10 @@ int minimum;
 @Min(value = 1, message = "Maximum must be ≥ 1")
 int maximum;
 
+application.properties: Line: 6
+    spring.datasource.url=jdbc:h2:file:~/src/main/resources/springBoot-Database
+
+
 InhousePartController.java Line 38
 if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
 bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
