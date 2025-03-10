@@ -33,13 +33,19 @@ public abstract class Part implements Serializable {
     public Part() {
     }
 
-    public Part(String name, double price, int inv, int minimum, int maximum) {
+    public Part(String name, double price, int inv) {
         this.name = name;
         this.price = price;
         this.inv = inv;
-        this.minimum = minimum;
-        this.maximum = maximum;
     }
+
+    public Part(long id, String name, double price, int inv) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.inv = inv;
+    }
+
 
     public long getId() {
         return id;
@@ -80,6 +86,10 @@ public abstract class Part implements Serializable {
     public void setMaximum(int maximum) { this.maximum = maximum; }
     public int getMaximum() { return this.maximum; }
 
+    public String toString(){
+        return this.name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -91,7 +101,7 @@ public abstract class Part implements Serializable {
 
     @Override
     public int hashCode() {
-        return Long.hashCode(id);
+        return (int) (id ^ (id >>> 32));
     }
 
 }

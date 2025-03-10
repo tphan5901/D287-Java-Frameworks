@@ -33,6 +33,13 @@ public class Product implements Serializable {
         this.inv = inv;
     }
 
+    public Product(long id, String name, double price, int inv) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.inv = inv;
+    }
+
     public long getId() {
         return id;
     }
@@ -68,6 +75,10 @@ public class Product implements Serializable {
         this.parts = parts;
     }
 
+    public String toString(){
+        return this.name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,8 +90,7 @@ public class Product implements Serializable {
 
     @Override
     public int hashCode() {
-        return Long.hashCode(id);
+        return (int) (id ^ (id >>> 32));
     }
-
 
 }

@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class MainScreenController {
-    private static final Logger logger = LoggerFactory.getLogger(MainScreenController.class);
+public class MainScreenControllerr {
+    private static final Logger logger = LoggerFactory.getLogger(MainScreenControllerr.class);
     private final PartService partService;
     private final ProductService productService;
 
-    public MainScreenController(PartService partService, ProductService productService){
+    public MainScreenControllerr(PartService partService, ProductService productService){
         this.partService = partService;
         this.productService = productService;
     }
