@@ -110,7 +110,6 @@ ProductController.java Line: 170
         }
 }
 
-
 G.  Modify the parts to track maximum and minimum inventory by doing the following:
 •  Add additional fields to the part entity for maximum and minimum inventory.
 •  Modify the sample inventory to include the maximum and minimum fields.
