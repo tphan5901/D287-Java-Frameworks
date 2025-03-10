@@ -36,11 +36,9 @@ public class OutsourcedPartController {
         if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
             bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
         }
-
         if (bindingResult.hasErrors()) {
             return "OutsourcedPartForm";
         }
-
         repo.save(part);
         return "redirect:/mainscreen";
     }

@@ -1,5 +1,4 @@
 package com.example.demo.controllers;
-
 import com.example.demo.domain.Part;
 import com.example.demo.domain.Product;
 import com.example.demo.service.PartService;
@@ -152,7 +151,6 @@ public class ProductController {
     public String purchaseProduct(@RequestParam("productID") int Id) {
         ProductService productService = context.getBean(ProductServiceImpl.class);
         Product product = productService.findById(Id);
-
         if (product.getInv() > 0) {
             product.setInv(product.getInv() - 1);
             productService.save(product);
