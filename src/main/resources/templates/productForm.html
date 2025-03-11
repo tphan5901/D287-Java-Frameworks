@@ -9,7 +9,7 @@
 <body class="container p-2">
 <h1>Product Form</h1>
 
-<form action="#" th:action="@{/addProductForm}" th:object="${product}" method="POST">
+<form action="#" th:action="@{/showFormAddProduct}" th:object="${product}" method="POST">
     <p><input type="hidden" th:field="*{id}"/></p>
     <p>Name <input type="text" th:field="*{name}" placeholder="Name" class="form-control mb-4 col-4" required/></p>
 

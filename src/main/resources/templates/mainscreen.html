@@ -67,7 +67,7 @@
     </script>
 
     <br><br>
-    <a th:href="@{/addProductForm}" class="btn btn-primary btn-sm mb-3">Add Product</a>
+    <a th:href="@{/showFormAddProduct}" class="btn btn-primary btn-sm mb-3">Add Product</a>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
@@ -82,7 +82,7 @@
             <td th:text="${product.name}">1</td>
             <td th:text="${product.price}">1</td>
             <td th:text="${product.inv}">1</td>
-            <td><a th:href="@{/UpdateProductForm(productID=${product.id})}" class="btn btn-primary btn-sm mb-3">Update</a> <!--update, pass in product.Id as tempProduct then @requestparam for post request-->
+            <td><a th:href="@{/showProductFormForUpdate(productID=${product.id})}" class="btn btn-primary btn-sm mb-3">Update</a> <!--update, pass in product.Id as tempProduct then @requestparam for post request-->
                 <a th:href="@{/deleteproduct(productID=${product.id})}" class="btn btn-primary btn-sm mb-3"
                    onclick="if(!(confirm('Are you sure you want to delete this product?')))return false">Delete</a>
                 <a th:href="@{/purchase(productID=${product.id})}" class="btn btn-primary btn-sm mb-3">Purchase</a> <!--@{/purchase({productID=${tempProduct.Id}})} post request function-->

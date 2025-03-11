@@ -24,8 +24,8 @@ public class ProductController {
     private static Product currentProduct;
     private Product product;
 
-    @GetMapping("/addProductForm")
-    public String addProductForm(Model theModel) {
+    @GetMapping("/showFormAddProduct")
+    public String showFormAddPart(Model theModel) {
         theModel.addAttribute("parts", partService.getAll());
         product = new Product();
         currentProduct=product;
@@ -40,7 +40,7 @@ public class ProductController {
         return "productForm";
     }
 
-    @PostMapping("/addProductForm")
+    @PostMapping("/showFormAddProduct")
     public String submitForm(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult, Model theModel) {
         theModel.addAttribute("product", product);
         if(bindingResult.hasErrors()){
@@ -76,8 +76,8 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/UpdateProductForm")
-    public String UpdateProductForm(@RequestParam("productID") int Id, Model theModel) {
+    @GetMapping("/showProductFormForUpdate")
+    public String showProductFormForUpdate(@RequestParam("productID") int Id, Model theModel) {
             theModel.addAttribute("parts", partService.getAll());
             ProductService repo = context.getBean(ProductServiceImpl.class);
             Product theProduct = repo.findById(Id);

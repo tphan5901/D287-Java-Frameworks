@@ -17,6 +17,12 @@ B.  Create a README file that includes notes describing where in the code to fin
 
 C.  Customize the HTML user interface for your customer’s application. The user interface should include the shop name, the product names, and the names of the parts.
 
+mainscreen.html
+Line: 16 <h1>Computer supply store</h1>
+Line: 18 <h2>Parts</h2>
+Line: 52 <h2>Products</h2>
+
+Included as screenshot ![Screenshot 2025-03-10 125750.png](Screenshot%202025-03-10%20125750.png)
 
 Note: Do not remove any elements that were included in the screen. You may add any additional elements you would like or any images, colors, and styles, although it is not required.
 
@@ -95,7 +101,7 @@ mainscreen.html Line: 88
       <a th:href="@{/purchase(productID=${product.id})}" class="btn btn-primary btn-sm mb-3">Purchase</a> <!--@{/purchase({productID=${tempProduct.Id}})} post request function-->
  </td>
 
-ProductController.java Line: 170
+ProductController.java Line: 150
 @GetMapping("/purchase")
     public String purchaseProduct(@RequestParam("productID") int Id) {
         ProductService productService = context.getBean(ProductServiceImpl.class);
@@ -195,6 +201,13 @@ H.  Add validation for between or at the maximum and minimum fields. The validat
 •  Display error messages when adding and updating parts if the inventory is greater than the maximum.
 
 InhousePartForm.html Line: 23
+<p> Min <input type="text" id = "min" th:field="*{minimum}" placeholder="Min" class="form-control mb-4 col-4" required/>
+    <span class="text-danger" th:errors="*{minimum}"></span>
+</p>
+<p> Max <input type="text" id = "max" th:field="*{maximum}" placeholder="Max" class="form-control mb-4 col-4" required/>
+    <span class="text-danger" th:errors="*{maximum}"></span>
+</p>
+
 OutsourcedPartForm.html Line: 23
 <p> Min <input type="text" id = "min" th:field="*{minimum}" placeholder="Min" class="form-control mb-4 col-4" required/>
     <span class="text-danger" th:errors="*{minimum}"></span>
