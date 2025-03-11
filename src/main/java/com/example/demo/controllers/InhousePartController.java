@@ -33,7 +33,7 @@ public class InhousePartController {
 
     @PostMapping("/InhousePartForm")
     public String submitForm(@Valid @ModelAttribute("inhousepart") InhousePart part, BindingResult bindingResult, Model model){
-            InhousePartService repo=context.getBean(InhousePartServiceImpl.class); //context.getBean returns instance of class and lets us access function properties
+            InhousePartService repo=context.getBean(InhousePartServiceImpl.class);
 
             if (part.getInv() < part.getMinimum() || part.getInv() > part.getMaximum()) {
                 bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and max");
