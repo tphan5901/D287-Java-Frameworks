@@ -263,3 +263,11 @@ PartTest.java: Line 32
         partOut.setInv(min);
         assertFalse(partOut.getInv() < partOut.getMinimum(), "Outsourced part inventory should not be below 0");
     }
+
+J. Remove the class files for any unused validators in order to clean your code.
+
+ValidDeletePart (DeletePartValidator) - Prevents parts from being deleted if they're associated with a product.
+ValidEnufParts (EnufPartsValidator) - Prevents adding a product if there isn't enough associated parts inventory
+ValidProductPrice (PriceProductValidator) - Prevents adding price that lower than the sum of a product's associated parts
+
+Three validators are used, in the project. These files will be kept
