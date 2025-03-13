@@ -228,37 +228,38 @@ bindingResult.rejectValue("inv", "error.inv", "Inventory must be between min and
 
 I.  Add at least two unit tests for the maximum and minimum fields to the PartTest class in the test package.
 
-PartTest.java: Line 26
-
-    Product product;
-    @BeforeEach
-    void setUp() {
-    partIn=new InhousePart();
-    partOut=new OutsourcedPart();
-    product = new Product();
-    }
+PartTest.java: Line 32
 
     @Test
-    void ValidPartInventory() { //max = 100
-        int max = 100;
-        partIn.setMaximum(max);
+    void ValidPartMax() {
+    int max = 100;
+    partIn.setMaximum(max);
+    partOut.setMaximum(max);
 
-        //inhouse
-        assertEquals(max, partIn.getMaximum(), "maximum should be set to 100");
+        // Inhouse
+        assertEquals(max, partIn.getMaximum(), "Maximum should be set to 100");
         partIn.setInv(max);
         assertFalse(partIn.getInv() > partIn.getMaximum(), "Part inventory should not exceed max value of 100");
 
-        //outsourced
-        partOut.setMaximum(max);
-        assertEquals(max, partOut.getMaximum(), "maximum should be set to 100");
+        // Outsourced
+        assertEquals(max, partOut.getMaximum(), "Maximum should be set to 100");
         partOut.setInv(max);
         assertFalse(partOut.getInv() > partOut.getMaximum(), "Outsourced part inventory should not exceed max value of 100");
     }
 
     @Test
-    void ValidProductInventory() { //max = 100
-        int max = 100;
-        product.setInv(max);
-        assertEquals(max, product.getInv());
-        assertFalse(product.getInv() > 100, "Product inventory should not exceed maximum of 100");
+    void ValidPartMin() {
+        int min = 0;
+        partIn.setMinimum(min);
+        partOut.setMinimum(min);
+
+        // Inhouse
+        assertEquals(min, partIn.getMinimum(), "Minimum should be set to 0");
+        partIn.setInv(min);
+        assertFalse(partIn.getInv() < partIn.getMinimum(), "Part inventory should not be below 0");
+
+        // Outsourced
+        assertEquals(min, partOut.getMinimum(), "Minimum should be set to 0");
+        partOut.setInv(min);
+        assertFalse(partOut.getInv() < partOut.getMinimum(), "Outsourced part inventory should not be below 0");
     }
