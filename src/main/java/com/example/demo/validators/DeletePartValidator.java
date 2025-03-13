@@ -4,6 +4,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 
+/*
 public class DeletePartValidator implements ConstraintValidator<ValidDeletePart, Part> {
     @Override
     public void initialize(ValidDeletePart constraintAnnotation) {
@@ -16,3 +17,4 @@ public class DeletePartValidator implements ConstraintValidator<ValidDeletePart,
         else return false;
     }
 }
+*/

@@ -9,6 +9,7 @@ public class InhousePart extends Part{
 
     public InhousePart() {
     }
+
     public int getPartId() {
         return partId;
     }

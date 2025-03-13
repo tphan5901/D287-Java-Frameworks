@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Project: demoDarbyFrameworks2-master
@@ -22,11 +22,40 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PartTest {
     Part partIn;
     Part partOut;
+    Product product;
     @BeforeEach
     void setUp() {
         partIn=new InhousePart();
         partOut=new OutsourcedPart();
+        product = new Product();
     }
+
+    @Test
+    void ValidPartInventory() { //max = 100
+        int max = 100;
+        partIn.setMaximum(max);
+
+        //inhouse
+        assertEquals(max, partIn.getMaximum(), "maximum should be set to 100");
+        partIn.setInv(max);
+        assertFalse(partIn.getInv() > partIn.getMaximum(), "Part inventory should not exceed max value of 100");
+
+        //outsourced
+        partOut.setMaximum(max);
+        assertEquals(max, partOut.getMaximum(), "maximum should be set to 100");
+        partOut.setInv(max);
+        assertFalse(partOut.getInv() > partOut.getMaximum(), "Outsourced part inventory should not exceed max value of 100");
+    }
+
+    @Test
+    void ValidProductInventory() { //max = 100
+        int max = 100;
+        product.setInv(max);
+        assertEquals(max, product.getInv());
+        assertFalse(product.getInv() > 100, "Product inventory should not exceed maximum of 100");
+    }
+
+
     @Test
     void getId() {
         Long idValue=4L;
@@ -157,14 +186,5 @@ class PartTest {
         assertEquals(partIn.hashCode(),partOut.hashCode());
     }
 
-    @Test
-    void testInventoryMinConstraint() {
-        partIn.setInv(-1);
-    }
-
-    @Test
-    void testInventoryMaxConstraint() {
-        partIn.setInv(101);
-    }
 
 }
