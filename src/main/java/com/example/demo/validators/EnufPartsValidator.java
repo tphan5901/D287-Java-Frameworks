@@ -16,8 +16,6 @@ import javax.validation.ConstraintValidatorContext;
  *
  *
  */
-
-
 public class EnufPartsValidator implements ConstraintValidator<ValidEnufParts, Product> {
     @Autowired
     private ApplicationContext context;

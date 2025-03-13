@@ -13,8 +13,6 @@ import java.lang.annotation.Target;
  *
  *
  */
-
-
 @Constraint(validatedBy = {EnufPartsValidator.class})
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
